@@ -2,8 +2,8 @@
 
 if [ "$1" != "" ]; then
   if ! type envsubst > /dev/null; then
-    apt update
-    apt install gettext-base
+    apt-get update
+    apt-get install gettext-base
   fi
 
   export DOLLAR='$'
