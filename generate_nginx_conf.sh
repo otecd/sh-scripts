@@ -1,16 +1,21 @@
 #!/usr/bin/env bash
 
 if [ "$1" != "" ]; then
+  if ! type envsubst > /dev/null; then
+    apt update
+    apt install gettext-base
+  fi
+
   export DOLLAR='$'
   envsubst < $1 > ./$DOMAIN.conf
   if [ "$2" != "" ]; then
-    sudo mv ./$DOMAIN.conf $2
+    mv ./$DOMAIN.conf $2
   else
-    sudo chown root:root ./$DOMAIN.conf
-    sudo mv ./$DOMAIN.conf /etc/nginx/sites-available/
-    sudo ln -s /etc/nginx/sites-available/$DOMAIN.conf /etc/nginx/sites-enabled/
-    sudo nginx -t
-    sudo service nginx reload
+    chown root:root ./$DOMAIN.conf
+    mv ./$DOMAIN.conf /etc/nginx/sites-available/
+    ln -s /etc/nginx/sites-available/$DOMAIN.conf /etc/nginx/sites-enabled/
+    nginx -t
+    service nginx reload
   fi
 else
   echo "В качестве первого аргумента следует задать путь к файлу nginx template"
