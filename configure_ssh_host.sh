@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+echo $@
+
 for arg in "$@"; do
   kk=$(echo $arg | cut -f1 -d=)
   vv=$(echo $arg | cut -f2 -d=)
